@@ -1,25 +1,31 @@
 # Rock Paper Scissors
 
-This project is a console-based Rock Paper Scissors game created as part of
-[The Odin Project Foundations course](https://www.theodinproject.com/lessons/foundations-rock-paper-scissors).
-It practices JavaScript functions, conditionals, loops, user input, random
-computer choices, and score tracking.
+This project is a Rock Paper Scissors game created as part of
+[The Odin Project Foundations course](https://www.theodinproject.com/lessons/foundations-rock-paper-scissors),
+later revisited and refactored to use the DOM as described in
+[Revisiting Rock Paper Scissors](https://www.theodinproject.com/lessons/foundations-revisiting-rock-paper-scissors#using-branches).
+It practices JavaScript functions, conditionals, event listeners, DOM
+manipulation, random computer choices, and score tracking.
 
 ## Assignment
 
-Build a Rock Paper Scissors game that is played entirely in the browser
-console.
+Refactor the original console-based Rock Paper Scissors game so the whole
+game is played in the browser instead of through `prompt()`, `alert()`, and
+`console.log()`.
 
-1. Set up a blank HTML document and connect an external JavaScript file.
-2. Create `getComputerChoice()` to randomly return `"rock"`, `"paper"`, or
+1. Add rock, paper, and scissors buttons to the HTML instead of using
+   `prompt()` for user input.
+2. Add an event listener to each button so clicking it plays a round with
+   that choice against the computer.
+3. Keep `getComputerChoice()` to randomly return `"rock"`, `"paper"`, or
    `"scissors"`.
-3. Create `getHumanChoice()` to ask the player for a choice and return it in
-   lowercase so the input is case-insensitive.
-4. Create score variables for the human player and the computer.
-5. Create `playRound()` to compare both choices, announce the result, and
-   increase the winner's score.
-6. Create `playGame()` to play five rounds, display the score after each
-   round, and announce the final winner or a tie.
+4. Update `playRound()` to compare the human and computer choices, update the
+   score, and render the round result to the page instead of logging it to
+   the console.
+5. Play rounds until either the human or the computer reaches a score of 5,
+   then display the final winner (or a tie) and the final score on the page.
+6. After the game ends, reset the scores and clear the results so a new game
+   can be played.
 
 ## Pseudocode
 
@@ -32,51 +38,52 @@ FUNCTION getComputerChoice
   RETURN the choice at the generated index
 END FUNCTION
 
-FUNCTION getHumanChoice
-  ASK the player to choose rock, paper, or scissors
-  CONVERT the input to lowercase
+FUNCTION playGame
+  SELECT all rock/paper/scissors buttons
 
-  IF the input is not rock, paper, or scissors
-    DISPLAY an error message
-    ASK the player for another choice
-  END IF
+  FOR EACH button
+    ADD a click listener that:
+      GET the computer's choice
+      GET the human's choice from the clicked button's text
 
-  RETURN the player's choice
+      IF neither score has reached 5
+        PLAY one round using both choices
+      ELSE
+        RESET the human and computer scores to 0
+        CLEAR the results from the page
+      END IF
+  END FOR EACH
 END FUNCTION
 
-FUNCTION playGame
-  SET the human score to 0
-  SET the computer score to 0
+FUNCTION playRound with the human and computer choices
+  IF the human choice beats the computer choice
+    INCREASE the human score by 1
+    DISPLAY that the human won the round
+  ELSE IF the computer choice beats the human choice
+    INCREASE the computer score by 1
+    DISPLAY that the computer won the round
+  ELSE
+    DISPLAY a tie
 
-  FUNCTION playRound with the human and computer choices
-    IF both choices are the same
-      ANNOUNCE a tie
-    ELSE IF rock defeats scissors, paper defeats rock,
-            or scissors defeats paper
-      INCREASE the human score by 1
-      ANNOUNCE that the human won the round
-    ELSE
-      INCREASE the computer score by 1
-      ANNOUNCE that the computer won the round
-    END IF
-  END FUNCTION
+  IF the human score or the computer score has reached 5
+    CALL displayScore
+  END IF
+END FUNCTION
 
-  REPEAT 5 times
-    GET a new human choice
-    GET a new computer choice
-    PLAY one round using both choices
-    DISPLAY the current scores
-  END REPEAT
+FUNCTION displayScore
+  CLEAR the results from the page
 
   IF the human score is greater than the computer score
-    ANNOUNCE the human as the winner
+    DISPLAY the human as the winner
   ELSE IF the computer score is greater than the human score
-    ANNOUNCE the computer as the winner
+    DISPLAY the computer as the winner
   ELSE
-    ANNOUNCE a tie
-  END IF
+    DISPLAY a tie
+
+  DISPLAY the final human and computer scores
 END FUNCTION
 
 CALL playGame
 
 END
+```
