@@ -1,5 +1,7 @@
 # Rock Paper Scissors
 
+[View the live demo](https://r0bby97.github.io/rock-paper-scissors/)
+
 This project is a Rock Paper Scissors game created as part of
 [The Odin Project Foundations course](https://www.theodinproject.com/lessons/foundations-rock-paper-scissors),
 later revisited and refactored to use the DOM as described in
